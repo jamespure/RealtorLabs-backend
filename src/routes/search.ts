@@ -15,6 +15,7 @@ router.get("/search", async (req: Request, res: Response) => {
       "X-RapidAPI-Host": host,
     },
   });
+  console.log(data);
   res.json(data.props);
 });
 
