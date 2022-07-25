@@ -4,6 +4,7 @@ import "dotenv/config";
 import rateLimit from "express-rate-limit";
 import searchRouter from "./routes/search";
 import similarRouter from "./routes/similarProperty";
+import googlePlacesApi from "./routes/googlePlacesApi";
 
 const app: Application = express();
 
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(
   rateLimit({
     windowMs: 5 * 60 * 1000,
-    max: 2,
+    max: 5,
   })
 );
 
@@ -22,7 +23,8 @@ app.get("/api/v1/", (req: Request, res: Response) => {
 });
 
 app.use("/api/v1", searchRouter);
-app.use("/api/v1/", similarRouter);
+app.use("/api/v1", similarRouter);
+app.use("/api/v1", googlePlacesApi);
 
 app.listen(port, () =>
   console.log(`Server is running on http://localhost:${port}/api/v1`)
